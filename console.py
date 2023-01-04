@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-from shlex import split
 import sys
+from shlex import split
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -38,7 +38,6 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
-
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
@@ -74,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is '}'\
+                    if pline[0] is '{' and pline[-1] is'}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -147,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the create method """
         print("Creates a class of any type")
         print("[Usage]: create <className>")
-        print("[Usage]: create <className> <args>\n")
+        print("[Usage]: create <className> <args>")
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -205,7 +204,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del (storage.all()[key])
+            del(storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -337,7 +336,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
