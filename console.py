@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+from shlex import split
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -114,22 +115,39 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+        """ Create an object of any class
+        """
+        try:
+            if not args:
+                raise SyntaxError()
+            args_list = split(args)
+            if args_list[0]  in self.classes and len(args_list) == 1:
+                inst = eval(args_list[0] + "()")
+                inst.save()
+                print(inst.id)
+            elif args_list[0] in self.classes and len(args_list) > 1:
+                inst = eval(args_list[0] + "()")
+                my_lst = [itm.split("=") for itm in args_list if len(itm.split("=")) == 2]
+                for itm in my_lst:
+                    itm[1] = itm[1].replace("_", " ")
+                    try:
+                        itm[1] = eval(itm[1])
+                    except Exception:
+                        pass
+                    setattr(inst, itm[0], itm[1])
+                inst.save()
+                print(inst.id)
+        except SyntaxError:
             print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        except NameError:
+            print("** class doesn't exist")
 
+        
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
+        print("[Usage]: create <className>")
+        print("[Usage]: create <className> <args>\n")
 
     def do_show(self, args):
         """ Method to show an individual object """
