@@ -29,11 +29,11 @@ class DBStorage:
         password = getenv("HBNB_MYSQL_PWD")
         hostname = getenv("HBNB_MYSQL_HOST")
         database = getenv("HBNB_MYSQL_DB")
-        #_storage = getenv("HBNB_TYPE_STORAGE")
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                format(username, password, hostname, database),
-                pool_pre_ping=True)
+                                      format(username, password,
+                                             hostname, database),
+                                      pool_pre_ping=True)
 
         if env == "test":
             Base.metadata.drop_all(self.__engine)
@@ -45,17 +45,18 @@ class DBStorage:
         new_dict = {}
 
         if cls is None:
-            for k, v in check_class.items():
+            for k, v in self.check_class.items():
                 query_obj = self.__session.query(v).all()
                 for _obj in query_obj:
                     key = "{}.{}".format(_obj.__class__.__name__, _obj.id)
                     new_dict[key] = _obj
         else:
-            if cls in check_class.values():
-                query_obj = self.__session.query(cls).all()
-                for _obj in query_obj:
-                    key = "{}.{}".format(_obj.__class__.__name__, _obj.id)
-                    new_dict[key] = _obj
+            # for k, v in self.check_class.items():
+            # if cls == type(v):
+            query_obj = self.__session.query(cls).all()
+            for _obj in query_obj:
+                key = "{}.{}".format(_obj.__class__.__name__, _obj.id)
+                new_dict[key] = _obj
         return new_dict
 
     def new(self, obj):
@@ -78,7 +79,8 @@ class DBStorage:
         """create all databases and create current session
         if not already created
         """
-        Base.metadata.drop_all(self.__engine)
-        session_factory = sessionmaker(bind=engine,expire_on_commit=False)
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
