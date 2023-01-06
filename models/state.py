@@ -8,10 +8,18 @@ from models.city import City
 
 
 class State(BaseModel, Base):
-    """ State class """
+    """ model representation of a `State` table
+    Attributes:
+        name: name of state
+        cities: constraint to delete a City instance if its
+                corresponding State instance is deleted.
+
+    """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship('City', backref='state', cascade='all, delete')
+    cities = relationship("City",
+                          cascade='all, delete, delete-orphan',
+                          backref="state")
 
     @property
     def cities(self):
