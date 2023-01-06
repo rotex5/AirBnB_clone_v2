@@ -14,6 +14,8 @@ class User(BaseModel, Base):
         last_name: last name
         places: constraint to delete a Place instance if its
                 corresponding User instance is deleted.
+        reviews: constraint to delete a Review instance if its
+                corresponding User instance is deleted.
 
     """
     __tablename__ = "users"
@@ -24,3 +26,6 @@ class User(BaseModel, Base):
     places = relationship("Place",
                           cascade='all, delete, delete-orphan',
                           backref="user")
+    reviews = relationship("Review",
+                           cascade='all, delete, delete-orphan',
+                           backref="user")
