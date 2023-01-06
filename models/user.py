@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from os import getenv
 
 
 class User(BaseModel, Base):
@@ -19,13 +20,31 @@ class User(BaseModel, Base):
 
     """
     __tablename__ = "users"
-    email = Column(String(128), nullable=False)
+    '''email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
     places = relationship("Place",
-                          cascade='all, delete, delete-orphan',
+                          cascade="all, delete, delete-orphan",
                           backref="user")
     reviews = relationship("Review",
-                           cascade='all, delete, delete-orphan',
-                           backref="user")
+                           cascade="all, delete, delete-orphan",
+                           backref="user")'''
+
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        email = Column(String(128), nullable=False)
+        password = Column(String(128), nullable=False)
+        first_name = Column(String(128))
+        last_name = Column(String(128))
+        places = relationship("Place",
+                              cascade="all, delete, delete-orphan",
+                              backref="user")
+        reviews = relationship("Review",
+                               cascade="all, delete, delete-orphan",
+                               backref="user")
+
+    else:
+        email = ''
+        password = ''
+        first_name = ''
+        last_name = ''
