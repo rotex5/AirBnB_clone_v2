@@ -36,7 +36,7 @@ class test_basemodel(unittest.TestCase):
         i = self.value()
         self.assertEqual(type(i), self.value)
 
-    """
+    '''
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "FileStorage")
     def test_kwargs(self):
         """ """
@@ -54,26 +54,28 @@ class test_basemodel(unittest.TestCase):
             new = BaseModel(**copy)
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "FileStorage")
     def test_save(self):
-        Testing save
+        """ Testing save """
         i = self.value()
         i.save()
         key = self.name + "." + i.id
         with open('file.json', 'r') as f:
             j = json.load(f)
             self.assertEqual(j[key], i.to_dict())
+    '''
+
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "FileStorage")
     def test_str(self):
         """ """
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
+
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "FileStorage")
     def test_todict(self):
         """ """
         i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
-    """
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "FileStorage")
     def test_kwargs_none(self):

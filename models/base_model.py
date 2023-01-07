@@ -2,6 +2,7 @@
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime
+from os import getenv
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 
@@ -54,9 +55,12 @@ class BaseModel:
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         new_dict = self.__dict__
-        if new_dict['_sa_instance_state']:
-            del new_dict['_sa_instance_state']
-        return '[{}] ({}) {}'.format(cls, self.id, new_dict)
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            if new_dict['_sa_instance_state']:
+                del new_dict['_sa_instance_state']
+            return '[{}] ({}) {}'.format(cls, self.id, new_dict)
+        else:
+            return '[{}] ({}) {}'.format(cls, self.id, new_dict)
         # return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def save(self):
@@ -76,9 +80,12 @@ class BaseModel:
         dictionary["__class__"] = str(type(self).__name__)
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if dictionary['_sa_instance_state']:
-            dictionary.pop('_sa_instance_state')
-        return dictionary
+        try:
+            if dictionary['_sa_instance_state']:
+                dictionary.pop('_sa_instance_state')
+            return dictionary
+        except KeyError:
+            pass
 
     def delete(self):
         """delete the current instance from the storage"""

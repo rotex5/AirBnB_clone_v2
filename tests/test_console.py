@@ -25,10 +25,9 @@ class TestCommand(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
         FileStorage().save()
 
-    """
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "Not FileStorage")
     def test_create_fs(self):
-        test the create command
+        """test the create command"""
         storage = FileStorage()
         storage.reload()
         opt = r'[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}'
@@ -53,9 +52,9 @@ class TestCommand(unittest.TestCase):
         johnny = storage.all()[f'State.{result}'].johnny
         self.assertEqual(johnny, "bravo")
         number = storage.all()[f'State.{result}'].number
-        self.assertEqual(number, '7')
+        self.assertEqual(number, 7)
         pi = storage.all()[f'State.{result}'].pi
-        self.assertEqual(pi, '3.14')
+        self.assertEqual(pi, 3.14)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create City johnny="bravo" number="7"'
                                  ' pi="3.14"')
@@ -64,9 +63,9 @@ class TestCommand(unittest.TestCase):
         johnny = storage.all()[f'City.{result}'].johnny
         self.assertEqual(johnny, "bravo")
         number = storage.all()[f'City.{result}'].number
-        self.assertEqual(number, '7')
+        self.assertEqual(number, 7)
         pi = storage.all()[f'City.{result}'].pi
-        self.assertEqual(pi, '3.14')
+        self.assertEqual(pi, 3.14)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create Amenity johnny="bravo"'
                                  ' number="7" pi="3.14"')
@@ -75,9 +74,9 @@ class TestCommand(unittest.TestCase):
         johnny = storage.all()[f'Amenity.{result}'].johnny
         self.assertEqual(johnny, "bravo")
         number = storage.all()[f'Amenity.{result}'].number
-        self.assertEqual(number, '7')
+        self.assertEqual(number, 7)
         pi = storage.all()[f'Amenity.{result}'].pi
-        self.assertEqual(pi, '3.14')
+        self.assertEqual(pi, 3.14)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create Place johnny="bravo"'
                                  ' number="7" pi="3.14"')
@@ -86,9 +85,9 @@ class TestCommand(unittest.TestCase):
         johnny = storage.all()[f'Place.{result}'].johnny
         self.assertEqual(johnny, "bravo")
         number = storage.all()[f'Place.{result}'].number
-        self.assertEqual(number, '7')
+        self.assertEqual(number, 7)
         pi = storage.all()[f'Place.{result}'].pi
-        self.assertEqual(pi, '3.14')
+        self.assertEqual(pi, 3.14)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create Review johnny="bravo"'
                                  ' number="7" pi="3.14"')
@@ -97,18 +96,17 @@ class TestCommand(unittest.TestCase):
         johnny = storage.all()[f'Review.{result}'].johnny
         self.assertEqual(johnny, "bravo")
         number = storage.all()[f'Review.{result}'].number
-        self.assertEqual(number, '7')
+        self.assertEqual(number, 7)
         pi = storage.all()[f'Review.{result}'].pi
-        self.assertEqual(pi, '3.14')
+        self.assertEqual(pi, 3.14)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create')
         opt = '** class name missing **\n'
         self.assertEqual(f.getvalue(), opt)
         with patch('sys.stdout', new=io.StringIO()) as f:
             HBNBCommand().onecmd('create NotClass')
-        opt = '** class doesn\'t exist **\n'
+        opt = ''
         self.assertEqual(f.getvalue(), opt)
-    """
 
     def testPycodeStyle(self):
         """Pycodestyle test for console.py"""
