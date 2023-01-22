@@ -3,14 +3,14 @@
 
 dpkg -s nginx 2>/dev/null >/dev/null || sudo apt-get -y install nginx
 
-mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
 
-echo "Hello World" > /data/web_static/releases/test/index.html
+echo "Hello World" | sudo tee /data/web_static/releases/test/index.html
 
 sudo ln -sf /data/web_static/releases/test/  /data/web_static/current
 
-chown -R ubuntu:ubuntu /data/
+sudo chown -R "ubuntu:ubuntu" /data/
 
 input="\
 server {
