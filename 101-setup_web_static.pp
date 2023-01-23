@@ -11,9 +11,7 @@ package { 'nginx':
 }
 
 exec {'create directories':
-  provider => shell,
-  command  => 'sudo mkdir -p /data/web_static/releases/test/',
-  before   => Exec['create second directory'],
+  command  => '/usr/bin/mkdir -p /data/web_static/releases/test/',
 }
 
 file { '/data/web_static/releases/test/index.html':
