@@ -9,24 +9,14 @@ package { 'nginx':
   ensure => installed,
 }
 
-file { '/data':
-  ensure  => 'directory'
+exec {'creating test sub-directory':
+  provider => shell,
+  command  => 'sudo mkdir -p /data/web_static/releases/test/',
 }
 
-file { '/data/web_static':
-  ensure => 'directory'
-}
-
-file { '/data/web_static/releases':
-  ensure => 'directory'
-}
-
-file { '/data/web_static/shared':
-  ensure => 'directory'
-}
-
-file { '/data/web_static/releases/test':
-  ensure => 'directory'
+exec {'creating shared sub-directory':
+  provider => shell,
+  command  => 'sudo mkdir -p /data/web_static/shared/',
 }
 
 file { '/data/web_static/releases/test/index.html':
