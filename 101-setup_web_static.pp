@@ -1,6 +1,9 @@
 # puppet script that sets up your web servers for the deployment of web_static
 
-exec { '/usr/bin/env apt -y update' : }
+exec { "update":
+  command => "apt-get update",
+  path => "/usr/bin/"
+}
 
 package { 'nginx':
   ensure => installed,
