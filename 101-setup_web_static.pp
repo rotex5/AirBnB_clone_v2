@@ -39,14 +39,15 @@ file { '/data/web_static/current':
   target => '/data/web_static/releases/test'
 }
 
-exec { 'chown -R ubuntu:ubuntu /data/':
-  path => '/usr/bin/:/usr/local/bin/:/bin/'
+exec { 'give user_group permissions':
+  provider => shell,
+  command => 'sudo chown -R ubuntu:ubuntu /data/'
 }
 
 exec { 'nginx_conf':
   provider    => shell,
   environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
-  command     => 'sed -i "39i $input" /etc/nginx/sites-enabled/default',
+  command     => 'sudo sed -i "38i $input" /etc/nginx/sites-enabled/default',
 }
 
 service { 'nginx':
