@@ -2,7 +2,7 @@
 
 exec { 'update':
   provider => shell,
-  command => 'sudo apt-get update',
+  command  => 'sudo apt-get update',
 }
 
 package { 'nginx':
@@ -44,7 +44,7 @@ exec { 'chown -R ubuntu:ubuntu /data/':
 }
 
 exec { 'nginx_conf':
-  provider => shell,
+  provider    => shell,
   environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
   command     => 'sed -i "39i $input" /etc/nginx/sites-enabled/default',
 }
