@@ -40,7 +40,7 @@ file { '/data/web_static/current':
 
 exec { 'nginx config':
   environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
-  command     => 'sed -i "39i $input" /etc/nginx/sites-enabled/default',
+  command     => 'sudo sed -i "38i $input" /etc/nginx/sites-enabled/default',
   path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin'
   before      => File['/data/']
 }
@@ -50,10 +50,10 @@ file {'/data/':
   owner   => 'ubuntu',
   group   => 'ubuntu',
   recurse => true,
-  before  => Service['nginx']
+  before  => Exec['restart nginx']
 }
 
-service { 'nginx':
-  ensure => 'running',
-  enable => true,
+exec {'restart nginx':
+  command  => 'sudo service nginx restart',
+  provider => shell,
 }
