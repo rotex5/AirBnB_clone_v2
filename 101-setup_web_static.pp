@@ -20,7 +20,7 @@ file { '/data/web_static/releases/test/index.html':
 }
 
 file { '/data/web_static/shared':
-  ensure => 'directory'
+  ensure  => 'directory'
   require => Exec['create directories']
 }
 
