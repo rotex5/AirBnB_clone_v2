@@ -38,7 +38,7 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
 
-    filename = path.splitext(archive_path)[0].split("/")[-1]
+    filename = archive_path.split("/")[-1].split(".")[0]
     filename_ext = archive_path.split("/")[-1]
 
     try:
