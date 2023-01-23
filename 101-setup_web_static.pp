@@ -39,16 +39,13 @@ file { '/data/web_static/current':
   target => '/data/web_static/releases/test'
 }
 
-file {'/data/':
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  recurse => true,
+exec { 'chown -R ubuntu:ubuntu /data/':
+  path => '/usr/bin/:/usr/local/bin/:/bin/'
 }
 
 exec { 'nginx_conf':
-  environment => ['data=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
-  command     => 'sed -i "39i $data" /etc/nginx/sites-enabled/default',
+  environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
+  command     => 'sed -i "39i $input" /etc/nginx/sites-enabled/default',
   path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin'
 }
 
