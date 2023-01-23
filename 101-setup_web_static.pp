@@ -40,19 +40,6 @@ exec { 'chown -R ubuntu:ubuntu /data/':
   path => '/usr/bin/:/usr/local/bin/:/bin/'
 }
 
-file { '/var/www':
-  ensure => 'directory'
-}
-
-file { '/var/www/html':
-  ensure => 'directory'
-}
-
-file { '/var/www/html/index.html':
-  ensure  => 'present',
-  content => 'Hello World'
-}
-
 exec { 'nginx_conf':
   environment => ['data=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
   command     => 'sed -i "39i $data" /etc/nginx/sites-enabled/default',
