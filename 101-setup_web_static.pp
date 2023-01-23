@@ -44,12 +44,13 @@ exec { 'give user_group permissions':
   command => 'sudo chown -R ubuntu:ubuntu /data/'
 }
 
-exec { 'nginx_conf':
+exec { 'configuring default file':
   provider    => shell,
   environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
   command     => 'sudo sed -i "38i $input" /etc/nginx/sites-enabled/default',
 }
 
-service { 'nginx':
-  ensure => running,
+exec {'restart nginx':
+  provider => shell,
+  command  => 'sudo service nginx restart',
 }
