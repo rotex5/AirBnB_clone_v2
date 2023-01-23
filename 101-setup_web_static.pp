@@ -31,7 +31,7 @@ file { '/data/web_static/current':
 
 exec { 'give user_group permissions':
   provider => shell,
-  command => 'sudo chown -R ubuntu:ubuntu /data/'
+  command  => 'sudo chown -R ubuntu:ubuntu /data/'
 }
 
 exec { 'configuring default file':
