@@ -2,3 +2,5 @@ file.json
 main_delete.py
 models/__pycache__/
 models/engine/__pycache__/
+__pycache__/1-pack_web_static.cpython-38.pyc
+versions/
