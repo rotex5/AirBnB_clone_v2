@@ -16,26 +16,25 @@ def do_deploy(archive_path):
         return False
 
     if path.exists(archive_path):
-        filename = archive_path.split("/")[-1].split(".")[0]
-        filename_ext = archive_path.split("/")[-1]
+        fn = archive_path.split("/")[-1].split(".")[0]
+        fn_ext = archive_path.split("/")[-1]
+        dwr = "/data/web_static/releases"
 
-        put(archive_path, "/tmp/{}".format(filename_ext))
-        run("mkdir -p /data/web_static/releases/{}".format(filename))
+        put(archive_path, "/tmp/{}".format(fn_ext))
+        run("mkdir -p /data/web_static/releases/{}".format(fn))
 
         run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
-            .format(filename_ext, filename))
+            .format(fn_ext, fn))
 
-        run("rm -f /tmp/{}".format(filename_ext))
+        run("rm -f /tmp/{}".format(fn_ext))
 
-        run("mv /data/web_static/releases/{}/web_static/* \
-                /data/web_static/releases/{}/".format(filename, filename))
+        run("mv {}/{}/web_static/* {}/{}/".format(dwr, fn, dwr, fn))
 
         run("rm -rf /data/web_static/releases/{}/web_static"
-            .format(filename))
+            .format(fn))
 
         run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/{}/  \
-                /data/web_static/current".format(filename))
+        run("ln -s {}/{}/ /data/web_static/current".format(dwr, fn))
         print("New version deployed!")
         return True
     else:
