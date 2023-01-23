@@ -1,8 +1,8 @@
 # puppet script that sets up your web servers for the deployment of web_static
 
 exec { 'update':
-  command => 'apt-get update',
-  path    => '/usr/bin/'
+  provider => shell,
+  command => 'sudo apt-get update',
 }
 
 package { 'nginx':
@@ -44,9 +44,9 @@ exec { 'chown -R ubuntu:ubuntu /data/':
 }
 
 exec { 'nginx_conf':
+  provider => shell,
   environment => ['input=\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n'],
   command     => 'sed -i "39i $input" /etc/nginx/sites-enabled/default',
-  path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin'
 }
 
 service { 'nginx':
