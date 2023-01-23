@@ -15,10 +15,10 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
 
-    filename = archive_path.split("/")[-1].split(".")[0]
-    filename_ext = archive_path.split("/")[-1]
+    if path.exists(archive_path):
+        filename = archive_path.split("/")[-1].split(".")[0]
+        filename_ext = archive_path.split("/")[-1]
 
-    try:
         put(archive_path, "/tmp/{}".format(filename_ext))
         run("mkdir -p /data/web_static/releases/{}".format(filename))
 
@@ -38,5 +38,5 @@ def do_deploy(archive_path):
                 /data/web_static/current".format(filename))
         print("New version deployed!")
         return True
-    except Exception:
+    else:
         return False
