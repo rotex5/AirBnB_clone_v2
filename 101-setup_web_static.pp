@@ -1,8 +1,8 @@
 # puppet script that sets up your web servers for the deployment of web_static
 
-exec { "update":
-  command => "apt-get update",
-  path => "/usr/bin/"
+exec { 'update':
+  command => 'apt-get update',
+  path    => '/usr/bin/'
 }
 
 package { 'nginx':
@@ -21,11 +21,11 @@ file { '/data/web_static/releases':
   ensure => 'directory'
 }
 
-file { '/data/web_static/releases/test':
+file { '/data/web_static/shared':
   ensure => 'directory'
 }
 
-file { '/data/web_static/shared':
+file { '/data/web_static/releases/test':
   ensure => 'directory'
 }
 
