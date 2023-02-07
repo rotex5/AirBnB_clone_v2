@@ -16,7 +16,7 @@ def close_db_conn(exception):
     storage.close()
 
 
-@app.route('/states/', strict_slashes=False)
+@app.route('/states', strict_slashes=False)
 def list_states():
     """ passes a list state
     to /states route"""
