@@ -20,8 +20,8 @@ def close_db_conn(exception):
 def list_states():
     """ passes a list state
     to /states route"""
-    states = storage.all(State).values()
-    return render_template('9-states.html', states=states)
+    states = storage.all(State)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
